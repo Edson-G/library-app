@@ -1,4 +1,5 @@
 import 'package:library_app/books/borrow.dart';
+import 'package:library_app/books/reservation.dart';
 import 'package:library_app/mocks.dart';
 import 'package:library_app/books/book.dart';
 import 'package:library_app/strategies/borrow/borrow_strategy.dart';
@@ -36,22 +37,114 @@ class LibrarySystem {
     return false;
   }
 
-  User? getUserById(String userId) {
-    for (User user in users) {
-      if (user.code == userId) {
-        return user;
-      }
-    }
-    return null;
+  /// Reservers a [Book] to a [User] according to its internal [ReserveStrategy]
+  bool reserveBookToUser(Book book, User user) {
+    // TODO: Implement
+    throw UnimplementedError();
   }
 
-  Book? getBookById(String bookId) {
-    for (Book book in books) {
-      if (book.code == bookId) {
-        return book;
+  User getUserById(String userId) {
+    try {
+      for (User user in users) {
+        if (user.code == userId) {
+          return user;
+        }
       }
+      throw Exception("Não existe usuário com o id $userId");
+    } catch (error) {
+      print(error);
+      rethrow;
     }
-    return null;
+  }
+
+  Book getBookById(String bookId) {
+    try {
+      for (Book book in books) {
+        if (book.code == bookId) {
+          return book;
+        }
+      }
+      throw Exception("Não existe livro com o id $bookId");
+    } catch (error) {
+      print(error);
+      rethrow;
+    }
+  }
+
+  List<Borrow> getBorrowsByUserId(String? id) {
+    try {
+      final Iterable<Borrow> foundBorrows = borrows.where(
+        (element) => element.user.code == id,
+      );
+
+      if (foundBorrows.isEmpty) {
+        throw Exception(
+          "Nenhum empréstimo encontrado para o usuário de id $id",
+        );
+      }
+
+      return foundBorrows.toList();
+    } catch (error) {
+      print(error);
+      rethrow;
+    }
+  }
+
+  List<Borrow> getBorrowsByBookId(String? id) {
+    try {
+      final Iterable<Borrow> foundBorrows = borrows.where(
+        (element) => element.book.code == id,
+      );
+
+      if (foundBorrows.isEmpty) {
+        throw Exception(
+          "Nenhum empréstimo encontrado para o livro de id $id",
+        );
+      }
+
+      return foundBorrows.toList();
+    } catch (error) {
+      print(error);
+      rethrow;
+    }
+  }
+
+  List<Reservation> getReservationsByUserId(String? id) {
+    try {
+      final Iterable<Reservation> foundReservations = reservations.where(
+        (element) => element.user.code == id,
+      );
+
+      if (foundReservations.isEmpty) {
+        throw Exception(
+          "Nenhum empréstimo encontrado para o usuário de id $id",
+        );
+      }
+
+      return foundReservations.toList();
+    } catch (error) {
+      print(error);
+      rethrow;
+    }
+  }
+
+  List<Reservation> getReservationsByBookId(String? id) {
+    try {
+      final Iterable<Reservation> foundReservations = reservations.where(
+        (element) => element.book.code == id,
+      );
+
+      if (foundReservations.isEmpty) {
+        throw Exception(
+          "Nenhum empréstimo encontrado para o livro de id $id",
+        );
+      }
+
+      return foundReservations.toList();
+    } catch (error) {
+      print(error);
+      rethrow;
+    }
   }
 
   final List<User> users = mockUsers;
@@ -60,4 +153,6 @@ class LibrarySystem {
         mockCopies.where((copy) => copy.bookCode == book.code).toList();
     return book;
   }).toList();
+  final List<Borrow> borrows = [];
+  final List<Reservation> reservations = [];
 }
