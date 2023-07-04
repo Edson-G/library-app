@@ -22,11 +22,11 @@ class Book {
 
   /// Every book [Copy] currently borrowed.
   List<Copy> get borrowedCopies =>
-      copies.where((copy) => !copy.isAvaliable).toList();
+      copies.where((copy) => !copy.isAvailable).toList();
 
   /// Every book [Copy] currently available for borrowing.
   List<Copy> get availableCopies =>
-      copies.where((copy) => copy.isAvaliable).toList();
+      copies.where((copy) => copy.isAvailable).toList();
 
   /// How many book copies are available for borrowin.
   int get availableCopiesAmount => availableCopies.length;
