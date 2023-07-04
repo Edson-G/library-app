@@ -14,7 +14,7 @@ const List<User> mockUsers = [
 
 List<Book> mockBooks = [
   Book(
-    100,
+    '100',
     "Engenharia de Software",
     "AddisonWesley",
     ["Ian Sommervile"],
@@ -22,7 +22,7 @@ List<Book> mockBooks = [
     2000,
   ),
   Book(
-    101,
+    '101',
     "UML - Guia do Usuário",
     "Campus",
     ["Grady Booch", "James Rambaugh", "Ivar Jacobson"],
@@ -30,7 +30,7 @@ List<Book> mockBooks = [
     2000,
   ),
   Book(
-    200,
+    '200',
     "Code Complete",
     "Microsoft Press",
     ["Steve McConnell"],
@@ -38,7 +38,7 @@ List<Book> mockBooks = [
     2014,
   ),
   Book(
-    201,
+    '201',
     "Agile Software Development, Principles, Patterns and Practices",
     "Prentice Hall",
     ["Robert Martin"],
@@ -46,7 +46,7 @@ List<Book> mockBooks = [
     2002,
   ),
   Book(
-    300,
+    '300',
     "Refactoring: Improvind the Design of Existing Code",
     "Addison-Wesley Professional",
     ["Martin Fowler"],
@@ -54,7 +54,7 @@ List<Book> mockBooks = [
     1999,
   ),
   Book(
-    301,
+    '301',
     "Software Metrics: A Rigorous and Practical Approach",
     "CRC Press",
     ["Norman Fenton", "James Bieman"],
@@ -62,7 +62,7 @@ List<Book> mockBooks = [
     2014,
   ),
   Book(
-    400,
+    '400',
     "Design Pattterns: Elements of Reusable Object-Oriented Software",
     "Addison-Wesley Professional",
     ["Enrich Gamma", "Richard Helm", "Ralph Johnson", "John Vlissides"],
@@ -70,7 +70,7 @@ List<Book> mockBooks = [
     1994,
   ),
   Book(
-    401,
+    '401',
     "UML Distilled: A Brief Guide to the Standard Object Modeling Language",
     "Addison-Wesley Professional",
     ["Martin Fowler"],
@@ -79,13 +79,13 @@ List<Book> mockBooks = [
   ),
 ];
 List<Copy> mockCopies = [
-  Copy(01, 100),
-  Copy(02, 100),
-  Copy(03, 101),
-  Copy(04, 200),
-  Copy(05, 201),
-  Copy(06, 300),
-  Copy(07, 300),
-  Copy(08, 400),
-  Copy(09, 400),
+  Copy('01', '100'),
+  Copy('02', '100'),
+  Copy('03', '101'),
+  Copy('04', '200'),
+  Copy('05', '201'),
+  Copy('06', '300'),
+  Copy('07', '300'),
+  Copy('08', '400'),
+  Copy('09', '400'),
 ];

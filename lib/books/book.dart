@@ -2,7 +2,7 @@ import 'package:library_app/books/copy.dart';
 import 'package:library_app/books/reservation.dart';
 
 class Book {
-  final int code;
+  final String code;
   final String title;
   final String publisher;
   final List<String> authors;

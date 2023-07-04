@@ -1,8 +1,8 @@
 import 'package:library_app/books/borrow.dart';
 
 class Copy {
-  final int code;
-  final int bookCode;
+  final String code;
+  final String bookCode;
   Borrow? currentBorrow;
 
   Copy(
