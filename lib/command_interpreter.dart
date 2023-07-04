@@ -29,9 +29,9 @@ class CommandInterpreter {
       // case 'obs':
       //   _processObserverCommand(commandParts);
       //   break;
-      // case 'liv':
-      //   _processBookInfoCommand(commandParts);
-      //   break;
+      case 'liv':
+        _processBookInfoCommand(commandParts);
+        break;
       // case 'usu':
       //   _processUserInfoCommand(commandParts);
       //   break;
@@ -44,11 +44,9 @@ class CommandInterpreter {
   }
 
   void _processLoanCommand(List<String> commandParts) {
-    // Extrair informações do comando
     User? user = system.getUserById(commandParts[1]);
     Book? book = system.getBookById(commandParts[2]);
 
-    // Chamar o método de empréstimo na classe LibrarySystem
     if (user != null && book != null) {
       system.lendBookToUser(book, user);
       print('Empréstimo realizado com sucesso!');
@@ -97,15 +95,17 @@ class CommandInterpreter {
   //   print('Professor registrado como observador do livro!');
   // }
 
-  // void _processBookInfoCommand(List<String> commandParts) {
-  //   // Extrair informações do comando
-  //   String bookId = commandParts[1];
+  void _processBookInfoCommand(List<String> commandParts) {
+    String bookId = commandParts[1];
+    Book? book = system.getBookById(bookId);
 
-  //   // Chamar o método de obtenção de informações do livro na classe LibrarySystem
-  //   String bookInfo = system.getBookInfo(bookId);
-
-  //   print(bookInfo);
-  // }
+    if (book != null) {
+      book.getBookInfo();
+    }
+    else {
+      print('Esse livro não existe');
+    }
+  }
 
   // void _processUserInfoCommand(List<String> commandParts) {
   //   // Extrair informações do comando
