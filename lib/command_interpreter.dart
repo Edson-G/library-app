@@ -41,13 +41,18 @@ class CommandInterpreter {
     User? user = system.getUserById(commandParts[1]);
     Book? book = system.getBookById(commandParts[2]);
 
+    if (user == null) {
+      print('Falha ao realizar empréstimo! O usuário não existe.');
+    }
+
+    else if (book == null) {
+      print('Falha ao realizar empréstimo! O livro não existe.');
+    }
+
     // Chamar o método de empréstimo na classe LibrarySystem
     if (user != null && book != null) {
       system.lendBookToUser(book, user);
       print('Empréstimo realizado com sucesso!');
-    }
-    else {
-      print('Falha ao realizar empréstimo!');
     }
   }
 
