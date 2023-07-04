@@ -19,14 +19,17 @@ class LibrarySystem {
   static final LibrarySystem instance = LibrarySystem._privateConstructor();
 
   /// Lends a [Book] to a [User] according to its internal [BorrowStrategy]
-  void lendBookToUser(Book book, User user) {
+  bool lendBookToUser(Book book, User user) {
     BorrowStrategy strategy = user.borrowStrategy;
 
     if (strategy.canBorrow(user, book)) {
       DateTime dueDate = DateTime.now()..add(strategy.borrowDuration);
       book.availableCopies[0].currentBorrow =
           Borrow(user, book, DateTime.now(), dueDate);
+      return true;
     }
+
+    return false;
   }
 
   final List<User> users = mockUsers;
