@@ -5,7 +5,11 @@ class Borrow {
   final User user;
   final Book book;
   final DateTime borrowDate;
-  final DateTime returnDate;
+  final DateTime returnDeadline;
+  DateTime? returnDate;
+  bool isReturned = false;
 
-  const Borrow(this.user, this.book, this.borrowDate, this.returnDate);
+  bool get isLate => isReturned && returnDeadline.isBefore(DateTime.now());
+
+  Borrow(this.user, this.book, this.borrowDate, this.returnDeadline);
 }

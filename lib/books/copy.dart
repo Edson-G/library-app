@@ -10,15 +10,16 @@ class Copy {
     this.bookCode,
   );
 
-  bool get isAvaliable {
+  bool get isAvailable {
     if ((currentBorrow?.book == null) ||
         (currentBorrow?.user == null) ||
         (currentBorrow?.returnDate == null)) {
+      currentBorrow = null;
       return true;
     } else {
-      return currentBorrow?.returnDate.isBefore(DateTime.now()) ?? false;
+      return false;
     }
   }
 
-  String get status => isAvaliable ? "Disponível" : "Emprestado";
+  String get status => isAvailable ? "Disponível" : "Emprestado";
 }
