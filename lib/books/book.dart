@@ -1,5 +1,7 @@
+import 'package:library_app/books/borrow.dart';
 import 'package:library_app/books/copy.dart';
 import 'package:library_app/books/reservation.dart';
+import 'package:library_app/users/user.dart';
 
 class Book {
   final String code;
@@ -33,4 +35,30 @@ class Book {
 
   /// Whether there is a book copy which can be borrowed currently.
   bool get hasAvailableCopies => availableCopies.isNotEmpty;
+
+  void getBookInfo() {
+    print("Título: $title");
+
+    int reservationCount = reservations.length;
+    print("Quantidade de reservas: $reservationCount");
+
+    for (int i = 0; i < reservationCount; i++) {
+      Reservation reservation = reservations[i];
+      User user = reservation.user;
+      print("Reserva ${i + 1}: ${user.name}");
+    }
+
+    for (Copy copy in copies) {
+      String status = copy.isAvailable ? "Disponível" : "Emprestado";
+      String loanInfo = "";
+
+      if (!copy.isAvailable) {
+        Borrow? borrow = copy.currentBorrow;
+        User? user = borrow?.user;
+        loanInfo = " - Empréstimo: ${user?.name} - Data de Empréstimo: ${borrow?.borrowDate} - Data de Devolução: ${borrow?.returnDeadline}";
+      }
+
+      print("Exemplar ${copy.code}: $status$loanInfo");
+    }
+  }
 }
