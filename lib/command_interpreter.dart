@@ -3,6 +3,13 @@ import 'package:library_app/library_system.dart';
 import 'package:library_app/users/user.dart';
 
 class CommandInterpreter {
+  /// Creates a [LibrarySystem] singleton.
+  CommandInterpreter._privateConstructor();
+
+  /// References the singleton instance.
+  static final CommandInterpreter instance =
+      CommandInterpreter._privateConstructor();
+
   final LibrarySystem system = LibrarySystem.instance;
 
   void interpretCommand(String command) {
@@ -41,18 +48,12 @@ class CommandInterpreter {
     User? user = system.getUserById(commandParts[1]);
     Book? book = system.getBookById(commandParts[2]);
 
-    if (user == null) {
-      print('Falha ao realizar empréstimo! O usuário não existe.');
-    }
-
-    else if (book == null) {
-      print('Falha ao realizar empréstimo! O livro não existe.');
-    }
-
     // Chamar o método de empréstimo na classe LibrarySystem
     if (user != null && book != null) {
       system.lendBookToUser(book, user);
       print('Empréstimo realizado com sucesso!');
+    } else {
+      print('Falha ao realizar empréstimo!');
     }
   }
 
