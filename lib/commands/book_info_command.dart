@@ -9,6 +9,12 @@ class BookInfoCommand implements LibraryCommand {
       if (commandParts.isEmpty) {
         throw Exception("Por favor, informe o id do livro que deseja buscar.");
       }
+
+      if (commandParts.length > 1) {
+        throw Exception("""Foram informados mais argumentos que o esperado. 
+            Por favor, informe apenas o id do livro que deseja buscar.""");
+      }
+
       String bookId = commandParts[0];
       Book? book = LibrarySystem.instance.getBookById(bookId);
 

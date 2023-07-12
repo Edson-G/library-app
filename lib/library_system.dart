@@ -201,4 +201,9 @@ class LibrarySystem {
       return false;
     }
   }
+
+  void printUserInfo(User user) {
+    List<Borrow> borrows = user.borrowHistory;
+    List<Book> reservations = getCurrentReservedBooksByUserId(user.id);
+  }
 }
