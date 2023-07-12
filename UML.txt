@@ -1,0 +1,174 @@
+@startuml
+set namespaceSeparator ::
+
+class "library_app::books::book.dart::Book" {
+  +String id
+  +String title
+  +String publisher
+  +List<String> authors
+  +int edition
+  +int year
+  +List<Copy> copies
+  +List<Reservation> reservations
+  +List<Copy> borrowedCopies
+  +List<Copy> availableCopies
+  +int availableCopiesAmount
+  +bool hasAvailableCopies
+  +int reservationCount
+  +bool wasBorrowedByUserId()
+  +bool wasReservedByUserId()
+  +Reservation? userReservation()
+  +void printBookInfo()
+}
+
+class "library_app::books::borrow.dart::Borrow" {
+  +User user
+  +Book book
+  +DateTime borrowDate
+  +DateTime returnDeadline
+  +DateTime? returnDate
+  +bool isReturned
+  +bool isLate
+}
+
+"library_app::books::borrow.dart::Borrow" o-- "library_app::users::user.dart::User"
+"library_app::books::borrow.dart::Borrow" o-- "library_app::books::book.dart::Book"
+
+class "library_app::books::copy.dart::Copy" {
+  +String code
+  +Book book
+  +Borrow? currentBorrow
+  +bool isAvailable
+  +String status
+}
+
+"library_app::books::copy.dart::Copy" o-- "library_app::books::book.dart::Book"
+"library_app::books::copy.dart::Copy" o-- "library_app::books::borrow.dart::Borrow"
+
+class "library_app::books::reservation.dart::Reservation" {
+  +User user
+  +Book book
+  +DateTime requestDate
+}
+
+"library_app::books::reservation.dart::Reservation" o-- "library_app::users::user.dart::User"
+"library_app::books::reservation.dart::Reservation" o-- "library_app::books::book.dart::Book"
+
+class "library_app::commands::book_info_command.dart::BookInfoCommand" {
+  +bool execute()
+}
+
+"library_app::commands::library_command.dart::LibraryCommand" <|-- "library_app::commands::book_info_command.dart::BookInfoCommand"
+
+abstract class "library_app::commands::library_command.dart::LibraryCommand" {
+  +bool execute()
+}
+
+class "library_app::commands::loan_command.dart::LoanCommand" {
+  +bool execute()
+}
+
+"library_app::commands::library_command.dart::LibraryCommand" <|-- "library_app::commands::loan_command.dart::LoanCommand"
+
+class "library_app::commands::reserve_command.dart::ReserveCommand" {
+  +bool execute()
+}
+
+"library_app::commands::library_command.dart::LibraryCommand" <|-- "library_app::commands::reserve_command.dart::ReserveCommand"
+
+class "library_app::commands::return_command.dart::ReturnCommand" {
+  +bool execute()
+}
+
+"library_app::commands::library_command.dart::LibraryCommand" <|-- "library_app::commands::return_command.dart::ReturnCommand"
+
+class "library_app::command_interpreter.dart::CommandInterpreter" {
+  {static} +CommandInterpreter instance
+  +void interpretCommand()
+}
+
+"library_app::command_interpreter.dart::CommandInterpreter" o-- "library_app::command_interpreter.dart::CommandInterpreter"
+
+class "library_app::library_system.dart::LibrarySystem" {
+  +List<User> users
+  +List<Book> books
+  {static} +LibrarySystem instance
+  {static} -void _printCopies()
+  +User? getUserById()
+  +Book? getBookById()
+  +List<Copy>? getLateDebtsByUserId()
+  +List<Book> getCurrentBorrowedBooksByUserId()
+  +List<Book> getCurrentReservedBooksByUserId()
+  +bool lendBookToUser()
+  +bool returnBook()
+  +bool reserveBookToUser()
+}
+
+"library_app::library_system.dart::LibrarySystem" o-- "library_app::library_system.dart::LibrarySystem"
+
+abstract class "library_app::strategies::borrow::borrow_strategy.dart::BorrowStrategy" {
+  +Duration borrowDuration
+  +int? borrowLimit
+  +bool canBorrowDuplicates
+  +bool canBypassReservations
+}
+
+class "library_app::strategies::borrow::postgrad_borrow_strategy.dart::PostgradBorrowStrategy" {
+  +Duration borrowDuration
+  +int borrowLimit
+  +bool canBorrowDuplicates
+  +bool canBypassReservations
+}
+
+"library_app::strategies::borrow::borrow_strategy.dart::BorrowStrategy" <|-- "library_app::strategies::borrow::postgrad_borrow_strategy.dart::PostgradBorrowStrategy"
+
+class "library_app::strategies::borrow::teacher_borrow_strategy.dart::TeacherBorrowStrategy" {
+  +Duration borrowDuration
+  +Null borrowLimit
+  +bool canBorrowDuplicates
+  +bool canBypassReservations
+}
+
+"library_app::strategies::borrow::borrow_strategy.dart::BorrowStrategy" <|-- "library_app::strategies::borrow::teacher_borrow_strategy.dart::TeacherBorrowStrategy"
+
+class "library_app::strategies::borrow::undergrad_borrow_strategy.dart::UndergradBorrowStrategy" {
+  +Duration borrowDuration
+  +int borrowLimit
+  +bool canBorrowDuplicates
+  +bool canBypassReservations
+}
+
+"library_app::strategies::borrow::borrow_strategy.dart::BorrowStrategy" <|-- "library_app::strategies::borrow::undergrad_borrow_strategy.dart::UndergradBorrowStrategy"
+
+class "library_app::users::postgrad_student.dart::PostgradStudent" {
+  +PostgradBorrowStrategy borrowStrategy
+}
+
+"library_app::users::postgrad_student.dart::PostgradStudent" o-- "library_app::strategies::borrow::postgrad_borrow_strategy.dart::PostgradBorrowStrategy"
+"library_app::users::user.dart::User" <|-- "library_app::users::postgrad_student.dart::PostgradStudent"
+
+class "library_app::users::teacher.dart::Teacher" {
+  +TeacherBorrowStrategy borrowStrategy
+}
+
+"library_app::users::teacher.dart::Teacher" o-- "library_app::strategies::borrow::teacher_borrow_strategy.dart::TeacherBorrowStrategy"
+"library_app::users::user.dart::User" <|-- "library_app::users::teacher.dart::Teacher"
+
+class "library_app::users::undergrad_student.dart::UndergradStudent" {
+  +UndergradBorrowStrategy borrowStrategy
+}
+
+"library_app::users::undergrad_student.dart::UndergradStudent" o-- "library_app::strategies::borrow::undergrad_borrow_strategy.dart::UndergradBorrowStrategy"
+"library_app::users::user.dart::User" <|-- "library_app::users::undergrad_student.dart::UndergradStudent"
+
+abstract class "library_app::users::user.dart::User" {
+  +String id
+  +String name
+  +List<Borrow> borrowHistory
+  +BorrowStrategy borrowStrategy
+}
+
+"library_app::users::user.dart::User" o-- "library_app::strategies::borrow::borrow_strategy.dart::BorrowStrategy"
+
+
+@enduml

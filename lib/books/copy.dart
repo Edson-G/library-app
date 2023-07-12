@@ -1,19 +1,18 @@
+import 'package:library_app/books/book.dart';
 import 'package:library_app/books/borrow.dart';
 
 class Copy {
   final String code;
-  final String bookCode;
+  final Book book;
   Borrow? currentBorrow;
 
   Copy(
     this.code,
-    this.bookCode,
+    this.book,
   );
 
   bool get isAvailable {
-    if ((currentBorrow?.book == null) ||
-        (currentBorrow?.user == null) ||
-        (currentBorrow?.returnDate == null)) {
+    if ((currentBorrow == null) || (currentBorrow?.isReturned ?? false)) {
       currentBorrow = null;
       return true;
     } else {

@@ -1,10 +1,12 @@
+import 'package:library_app/books/borrow.dart';
 import 'package:library_app/strategies/borrow/borrow_strategy.dart';
 
 abstract class User {
-  final String code;
+  final String id;
   final String name;
+  List<Borrow> borrowHistory = [];
 
-  const User(this.code, this.name);
+  User(this.id, this.name);
 
   BorrowStrategy get borrowStrategy;
 }

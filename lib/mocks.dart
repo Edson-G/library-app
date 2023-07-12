@@ -5,14 +5,14 @@ import 'package:library_app/users/teacher.dart';
 import 'package:library_app/users/undergrad_student.dart';
 import 'package:library_app/users/user.dart';
 
-const List<User> mockUsers = [
+List<User> mockUsers = [
   UndergradStudent('123', 'João da Silva'),
   PostgradStudent('456', 'Luiz Fernando Rodrigues'),
   UndergradStudent('789', 'Pedro Paulo'),
   Teacher('100', 'Carlos Lucena'),
 ];
 
-List<Book> mockBooks = [
+List<Book> mockBooksWithoutCopies = [
   Book(
     '100',
     "Engenharia de Software",
@@ -79,13 +79,13 @@ List<Book> mockBooks = [
   ),
 ];
 List<Copy> mockCopies = [
-  Copy('01', '100'),
-  Copy('02', '100'),
-  Copy('03', '101'),
-  Copy('04', '200'),
-  Copy('05', '201'),
-  Copy('06', '300'),
-  Copy('07', '300'),
-  Copy('08', '400'),
-  Copy('09', '400'),
+  Copy('01', mockBooksWithoutCopies[0]),
+  Copy('02', mockBooksWithoutCopies[0]),
+  Copy('03', mockBooksWithoutCopies[1]),
+  Copy('04', mockBooksWithoutCopies[2]),
+  Copy('05', mockBooksWithoutCopies[3]),
+  Copy('06', mockBooksWithoutCopies[4]),
+  Copy('07', mockBooksWithoutCopies[4]),
+  Copy('08', mockBooksWithoutCopies[6]),
+  Copy('09', mockBooksWithoutCopies[6]),
 ];

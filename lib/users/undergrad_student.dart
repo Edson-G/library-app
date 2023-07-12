@@ -2,7 +2,7 @@ import 'package:library_app/strategies/borrow/undergrad_borrow_strategy.dart';
 import 'package:library_app/users/user.dart';
 
 class UndergradStudent extends User {
-  const UndergradStudent(super.code, super.name);
+  UndergradStudent(super.code, super.name);
 
   @override
   UndergradBorrowStrategy get borrowStrategy => UndergradBorrowStrategy();

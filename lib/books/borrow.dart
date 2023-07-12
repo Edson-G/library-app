@@ -9,7 +9,7 @@ class Borrow {
   DateTime? returnDate;
   bool isReturned = false;
 
-  bool get isLate => isReturned && returnDeadline.isBefore(DateTime.now());
+  bool get isLate => !isReturned && returnDeadline.isBefore(DateTime.now());
 
   Borrow(this.user, this.book, this.borrowDate, this.returnDeadline);
 }
