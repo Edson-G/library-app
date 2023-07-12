@@ -95,6 +95,20 @@ class LibrarySystem {
     }
   }
 
+  List<Reservation> getReservationsByUserId(String userId) {
+    try {
+      List<Reservation> reservations = books
+          .map((e) => e.reservations
+              .firstWhereOrNull((element) => element.user.id == userId))
+          .whereNotNull()
+          .toList();
+      return reservations;
+    } catch (exception) {
+      print(exception);
+      return [];
+    }
+  }
+
   /// Lends a [Book] to an [User] according to its internal [BorrowStrategy].
   /// Returns a `bool` based on whether the borrow process was successful
   bool lendBookToUser(Book book, User user) {
@@ -204,6 +218,25 @@ class LibrarySystem {
 
   void printUserInfo(User user) {
     List<Borrow> borrows = user.borrowHistory;
-    List<Book> reservations = getCurrentReservedBooksByUserId(user.id);
+    List<Reservation> reservations = getReservationsByUserId(user.id);
+    print("${user.name}, de id ${user.id}.");
+    if (borrows.isNotEmpty) {
+      print("Empréstimos:");
+      for (Borrow borrowed in borrows) {
+        print(
+            """${borrowed.book.title}, emprestado em ${borrowed.borrowDate}, ${borrowed.isReturned ? "Finalizado" : "Em curso"},
+            ${borrowed.isReturned ? "Entregue em: ${borrowed.returnDate}" : "Prazo de entrega: ${borrowed.returnDeadline}"}}""");
+      }
+    } else {
+      print("Até o momento, não realizou o empréstimo de nenhum livro.");
+    }
+    if (reservations.isNotEmpty) {
+      print("Reservas:");
+      for (Reservation reserved in reservations) {
+        print("${reserved.book.title}, reservado em ${reserved.requestDate}.");
+      }
+    } else {
+      print("No momento, não possui nenhum livro reservado.");
+    }
   }
 }
