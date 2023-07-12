@@ -23,7 +23,6 @@ class Book {
   );
 
   /// Every book [Copy] currently borrowed.
-  /// TODO - Check order
   List<Copy> get borrowedCopies => copies
       .where((copy) => !copy.isAvailable)
       .sorted((a, b) => (a.currentBorrow?.returnDeadline.isBefore(
@@ -62,7 +61,6 @@ class Book {
 
     print("Quantidade de reservas: $reservationCount");
 
-    // TODO - Confirmar ordem
     for (var element in reservations
         .sorted((a, b) => a.requestDate.isBefore(b.requestDate) ? 1 : -1)) {
       print("- ${element.user.name}, reservado em ${element.requestDate}");

@@ -29,18 +29,11 @@ class CommandInterpreter {
     try {
       if (commandByAction[action] == null) {
         throw Exception(
-            "Comando inexistente. Por referência, os comandos existentes são ${commandByAction.keys}");
+            "Comando inexistente. Por referência, os comandos existentes são ${commandByAction.keys} ou 'sai' para sair");
       }
       commandByAction[action]?.execute(commandParts.skip(1).toList());
     } catch (exception) {
       print(exception);
     }
-
-    // case 'obs':
-    //   _processObserverCommand(commandParts);
-    //   break;
-    // case 'ntf':
-    //   _processNotificationCommand(commandParts);
-    //   break;
   }
 }
