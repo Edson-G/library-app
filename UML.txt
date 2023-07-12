@@ -82,6 +82,12 @@ class "library_app::commands::return_command.dart::ReturnCommand" {
 
 "library_app::commands::library_command.dart::LibraryCommand" <|-- "library_app::commands::return_command.dart::ReturnCommand"
 
+class "library_app::commands::user_info_command.dart::UserInfoCommand" {
+  +bool execute()
+}
+
+"library_app::commands::library_command.dart::LibraryCommand" <|-- "library_app::commands::user_info_command.dart::UserInfoCommand"
+
 class "library_app::command_interpreter.dart::CommandInterpreter" {
   {static} +CommandInterpreter instance
   +void interpretCommand()
@@ -99,9 +105,11 @@ class "library_app::library_system.dart::LibrarySystem" {
   +List<Copy>? getLateDebtsByUserId()
   +List<Book> getCurrentBorrowedBooksByUserId()
   +List<Book> getCurrentReservedBooksByUserId()
+  +List<Reservation> getReservationsByUserId()
   +bool lendBookToUser()
   +bool returnBook()
   +bool reserveBookToUser()
+  +void printUserInfo()
 }
 
 "library_app::library_system.dart::LibrarySystem" o-- "library_app::library_system.dart::LibrarySystem"
